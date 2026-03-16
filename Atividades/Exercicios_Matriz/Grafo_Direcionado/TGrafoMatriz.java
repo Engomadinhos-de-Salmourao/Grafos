@@ -145,6 +145,22 @@ public class TGrafoMatriz implements Grafo{
 
     }
 
+    /*public TGrafoMatriz grafoReduzido(){
+        TGrafoMatriz aux = new TGrafoMatriz(this.n);
+        while(aux.n != 0){
+            List<Integer> fd = aux.fechoTD(0);
+            List<Integer> fi = aux.fechoTI(0);
+            List<Integer> intersec = new ArrayList<>();
+
+            //Intersecção
+            //Remoção dos nós na Intersecção
+            //Ver como fazer para conectar e criar nós depois
+
+        }
+    }
+    */
+
+
     public List<Integer> largura(int v, Integer[][]union){
         List<Integer> visitados = new ArrayList<>();
         Queue<Integer> fila = new LinkedList<>();

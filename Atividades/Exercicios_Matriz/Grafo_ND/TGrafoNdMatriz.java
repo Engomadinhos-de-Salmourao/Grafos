@@ -1,5 +1,10 @@
 package Exercicios_Matriz.Grafo_ND;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 public class TGrafoNdMatriz {
     private	int n;
     private	int arestas;
@@ -59,6 +64,32 @@ public class TGrafoNdMatriz {
             }
         }
         return gaux;
+    }
+
+    public int conexidade(){
+        List<Integer> visitados = this.largura(0);
+        return (visitados.size() == n)?1:0;
+    }
+
+    public List<Integer> largura(int v){
+        List<Integer> visitados = new ArrayList<>();
+        Queue<Integer> fila = new LinkedList<>();
+
+        visitados.add(v);
+        fila.add(v);
+        while (!fila.isEmpty()) {
+            int n = fila.remove();
+            for (int m = 0; m<this.n; m++) {
+                if (this.adj[n][m] == 0) {
+                    continue;
+                }
+                if (!visitados.contains(m)) {
+                    fila.add(m);
+                    visitados.add(m);
+                }
+            }
+        }
+        return visitados;
     }
 
     public void insertA(int v, int w) {
