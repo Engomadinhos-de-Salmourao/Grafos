@@ -7,7 +7,7 @@ Repositório com todas as atividades realizadas na matéria de Teoria dos Grafos
 
 ---
 ## Atividades (códigos):
-
+1. [Grafos em Largura e Profundidade](./Atividades/Lista_Algoritimos)
 
 ---
 ## Projeto:
