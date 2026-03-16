@@ -61,25 +61,24 @@ public class TGrafoMatriz implements Grafo{
         int iaux=0;
         int jaux=0;
         for(int i=0; i<this.n; i++){
-            if(i != v){
-                for (int j=0; j<this.n; j++){
-                    if(j !=v ){
-                        aux[iaux][jaux] = this.adj[i][j];
-                        jaux++;
-                    }
-
+            for (int j=0; j<this.n; j++){
+                if(j!=v && i !=v){
+                    aux[iaux][jaux] = this.adj[i][j];
+                    jaux++;
                 }
-                iaux++;
+                else{
+                    this.removeA(i,j);
+                }
+
             }
-            else{
-                continue;
+            if(i != v){
+                iaux++;
             }
             jaux = 0;
         }
         this.n--;
         this.adj = aux;
     }
-
     public boolean isComplete(){
         return this.arestas == this.n*this.n-this.n;
     }

@@ -3,13 +3,13 @@ package Exercicios_Matriz.Grafo_ND;
 public class TGrafoNdMatriz {
     private	int n;
     private	int arestas;
-    private int[][] adj;
+    private Integer[][] adj;
 
 
     public TGrafoNdMatriz(int n) {
         this.n = n;
         this.arestas = 0;
-        this.adj = new int [n][n];
+        this.adj = new Integer [n][n];
 
         for(int i = 0; i< n; i++){
             for(int j = 0; j< n; j++){
@@ -70,6 +70,31 @@ public class TGrafoNdMatriz {
         else{
             System.out.println("Já existe uma aresta entre os nós " + v + " e " + w);
         }
+    }
+
+    public void removeV(int v){
+        Integer[][] aux = new Integer [n-1][n-1];
+        int iaux=0;
+        int jaux=0;
+        for(int i=0; i<this.n; i++){
+            for (int j=0; j<this.n; j++){
+                if(j!=v && i !=v){
+                    aux[iaux][jaux] = this.adj[i][j];
+                    jaux++;
+                }
+                else{
+                    this.removeA(i,j);
+                    this.removeA(j,i);
+                }
+
+            }
+            if(i != v){
+                iaux++;
+            }
+            jaux = 0;
+        }
+        this.n--;
+        this.adj = aux;
     }
 
     public void removeA(int v, int w) {
