@@ -57,6 +57,7 @@ public class TGrafoNdMatriz {
         TGrafoNdMatriz gaux = new TGrafoNdMatriz(this.n);
         for(int i=0; i<this.n; i++){
             for(int j=0; j<this.n; j++){
+                if(gaux.getAdj()[i][j] == 1) continue;
                 if(this.adj[i][j] == 0){
                     gaux.insertA(i, j);
                 }
