@@ -113,7 +113,7 @@ public class TGrafoNdMatriz {
                     aux[iaux][jaux] = this.adj[i][j];
                     jaux++;
                 }
-                else{
+                else if (this.adj[i][j] != 0){
                     this.removeA(i,j);
                     this.removeA(j,i);
                 }
