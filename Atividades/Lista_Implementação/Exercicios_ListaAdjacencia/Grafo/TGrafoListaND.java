@@ -74,6 +74,23 @@ public class TGrafoListaND {
         return true;
     }
 
+    public void inverteListas() {
+        for (int i = 0; i < this.n; i++) {
+            TNo atual = this.adj[i];
+            TNo ant = null;
+            TNo prox;
+
+            while (atual != null) {
+                prox = atual.prox;
+                atual.prox = ant;
+                ant = atual;
+                atual = prox;
+            }
+
+            this.adj[i] = ant;
+        }
+    }
+
     public void removeV(int v) {
         while (adj[v] != null) {
             removeA(v, adj[v].w); // já remove v↔w

@@ -34,7 +34,6 @@ public class TGrafoNdMatriz {
         return degree;
     }
 
-
     public int degree(int v){return this.inDegree(v);}
 
     public boolean nodeSource(int v){return this.inDegree(v) >= 1;}
