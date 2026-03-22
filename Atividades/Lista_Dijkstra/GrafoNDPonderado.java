@@ -23,7 +23,7 @@ public class GrafoNDPonderado {
         if(adj[v][w].equals(Float.POSITIVE_INFINITY)){
             adj[v][w] = weight;
             adj[w][v] = weight;
-            arestas++;
+            arestas+=2;
         }
         else{
             System.out.println("Já existe uma aresta entre os nós " + v + " e " + w );
@@ -34,7 +34,7 @@ public class GrafoNDPonderado {
         if(!adj[v][w].equals(Float.POSITIVE_INFINITY)){
             adj[v][w] = Float.POSITIVE_INFINITY;
             adj[w][v] = Float.POSITIVE_INFINITY;
-            arestas--;
+            arestas-=2;
         }
         else{
             System.out.println("Não existe uma aresta entre os nós " + v + " e " + w);
@@ -53,5 +53,13 @@ public class GrafoNDPonderado {
                 else {System.out.print("Adj[" + i + "," + w + "]= " + Float.POSITIVE_INFINITY + " ");}
         }
         System.out.println("\n\nfim da impressão do grafo." );
+    }
+
+    public int getN() {
+        return n;
+    }
+
+    public Float[][] getAdj() {
+        return adj;
     }
 }

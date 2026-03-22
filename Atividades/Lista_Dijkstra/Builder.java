@@ -9,25 +9,26 @@ import java.util.List;
 import java.util.Objects;
 
 public class Builder {
-    public static TGrafoNdMatriz archiveReader(String archive) throws IOException {
+    public static GrafoNDPonderado archiveReader(String archive) throws IOException {
         Path caminho = Path.of(archive);
         List<String> linhas = Files.readAllLines(caminho);
 
-        TGrafoNdMatriz gm = null;
+        GrafoNDPonderado gm = null;
 
         for (String linha : linhas) {
             if(Objects.equals(linha, linhas.getFirst())){
-                gm  = new TGrafoNdMatriz(Integer.parseInt(linha));
+                gm  = new GrafoNDPonderado(Integer.parseInt(linha));
             }
             else{
                 if(Objects.equals(linha, linhas.get(1))){
-                    continue;
+                   continue;
                 }
                 String[] result = linha.split(" ");
                 int v = Integer.parseInt(result[0]);
                 int w = Integer.parseInt(result[1]);
+                float weight = Float.parseFloat(result[2]);
                 if (gm != null) {
-                    gm.insertA(v,w);
+                    gm.insertA(v-1,w-1, weight);
                 }
 
             }
