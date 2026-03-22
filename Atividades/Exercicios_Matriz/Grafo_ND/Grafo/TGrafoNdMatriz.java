@@ -1,4 +1,4 @@
-package Exercicios_Matriz.Grafo_ND;
+package Exercicios_Matriz.Grafo_ND.Grafo;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

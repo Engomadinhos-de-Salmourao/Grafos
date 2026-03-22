@@ -1,34 +1,34 @@
-package Lista_Algoritimos;
+package Lista_Algoritimos.Grafo;
+
 
 import java.util.*;
 
-public class TGrafoND {
+public class TGrafo {
     private	int n;
     private	int arestas;
-    private int[][] adj;
-
-    public TGrafoND(int n){
+    private Integer[][] adj;
+    
+    public TGrafo(int n){
         this.n = n;
         this.arestas = 0;
-        this.adj = new int [n][n];
-
+        this.adj = new Integer [n][n];
         for(int i = 0; i< n; i++){
             for(int j = 0; j< n; j++){
                 this.adj[i][j]=0;
             }
         }
     }
-
-    public void insertA(int v, int w){
-        if(adj[v][w] == 0 ){
+    
+    public void insertA(int v, int w) {
+        if(adj[v][w].equals(0)){
             adj[v][w] = 1;
-            adj[w][v] = 1;
             arestas++;
         }
         else{
-            System.out.println("Já existe uma aresta entre os nós " + v + " e " + w);
+            System.out.println("Já existe uma aresta entre os nós ");
         }
     }
+
 
     public void profundidade(int inicio) {
         List<Integer> visitados = new ArrayList<>();

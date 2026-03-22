@@ -1,7 +1,5 @@
 package Lista_Dijkstra;
 
-import Exercicios_Matriz.Grafo_ND.TGrafoNdMatriz;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

@@ -1,4 +1,4 @@
-package Exercicios_Matriz.Grafo_Direcionado;
+package Exercicios_Matriz.Grafo_Direcionado.Builder;
 
 public enum GraphType {
     PONDERADO("ponderado"),

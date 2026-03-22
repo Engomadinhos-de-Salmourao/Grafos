@@ -1,7 +1,6 @@
-package Exercicios_Matriz.Grafo_ND;
+package Exercicios_Matriz.Grafo_ND.Builder;
 
-import Exercicios_Matriz.Grafo_Direcionado.GraphType;
-import Lista_Algoritimos.TGrafoND;
+import Exercicios_Matriz.Grafo_ND.Grafo.TGrafoNdMatriz;
 
 import java.io.IOException;
 import java.nio.file.Files;

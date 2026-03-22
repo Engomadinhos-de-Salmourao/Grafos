@@ -1,8 +1,8 @@
-package Exercicios_Matriz.Grafo_Direcionado;
+package Exercicios_Matriz.Grafo_Direcionado.Grafo;
 
 import java.util.*;
 
-public class TGrafoMatriz implements Grafo{
+public class TGrafoMatriz implements Grafo {
     private	int n;
     private	int arestas;
     private Integer[][] adj;
@@ -62,11 +62,11 @@ public class TGrafoMatriz implements Grafo{
         int jaux=0;
         for(int i=0; i<this.n; i++){
             for (int j=0; j<this.n; j++){
-                if(j!=v && i !=v){
+                if(j!=v && i!=v){
                     aux[iaux][jaux] = this.adj[i][j];
                     jaux++;
                 }
-                else{
+                else if(this.adj[i][j] != 0){
                     this.removeA(i,j);
                 }
 
@@ -79,9 +79,8 @@ public class TGrafoMatriz implements Grafo{
         this.n--;
         this.adj = aux;
     }
-    public boolean isComplete(){
-        return this.arestas == this.n*this.n-this.n;
-    }
+
+    public boolean isComplete(){return this.arestas == this.n*this.n-this.n;}
 
     public int conexidade(){
         Integer[][] fd = new Integer[this.n][this.n];
@@ -145,21 +144,41 @@ public class TGrafoMatriz implements Grafo{
 
     }
 
-    /*public TGrafoMatriz grafoReduzido(){
-        TGrafoMatriz aux = new TGrafoMatriz(this.n);
-        while(aux.n != 0){
-            List<Integer> fd = aux.fechoTD(0);
-            List<Integer> fi = aux.fechoTI(0);
-            List<Integer> intersec = new ArrayList<>();
+    public TGrafoMatriz grafoReduzido(){
+        List<List<Integer>> ciclos = new ArrayList<>();
+        List<Integer> acessados = new ArrayList<>();
+        Map<Integer, Integer> vertice = new HashMap<>();
 
-            //Intersecção
-            //Remoção dos nós na Intersecção
-            //Ver como fazer para conectar e criar nós depois
+        for(int v=0; v<this.n; v++){
+            if(acessados.contains(v)){continue;}
+            List<Integer> fd = this.fechoTD(v);
+            List<Integer> fi = this.fechoTI(v);
+            fd.retainAll(fi);
 
+
+            if(!fd.isEmpty()){
+                ciclos.add(fd);
+                int cicloIdx = ciclos.size() - 1;
+                for (Integer ver : fd) {
+                    acessados.add(ver);
+                    vertice.put(ver, cicloIdx);
+                }
+            }
         }
-    }
-    */
 
+        TGrafoMatriz grafoReduzido = new TGrafoMatriz(ciclos.size());
+        for(List<Integer> aux : ciclos){
+            for(Integer i : aux){
+                for(int j=0; j<this.n; j++){
+                    if(this.adj[i][j] == 1 && !aux.contains(j)){
+                        grafoReduzido.insertA(ciclos.indexOf(aux), vertice.get(j));
+                    }
+                }
+            }
+        }
+
+        return grafoReduzido;
+    }
 
     public List<Integer> largura(int v, Integer[][]union){
         List<Integer> visitados = new ArrayList<>();
@@ -237,7 +256,6 @@ public class TGrafoMatriz implements Grafo{
             System.out.println("Já existe uma aresta entre os nós " + v + " e " + w);
         }
     }
-
 
     public void removeA(int v, int w) {
         if(adj[v][w].equals(1)){

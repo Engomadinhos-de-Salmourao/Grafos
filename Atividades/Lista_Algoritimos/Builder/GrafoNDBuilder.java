@@ -1,4 +1,6 @@
-package Lista_Algoritimos;
+package Lista_Algoritimos.Builder;
+
+import Lista_Algoritimos.Grafo.TGrafoND;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -6,16 +8,16 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
-public class GrafoBuilder {
-    public static TGrafo archiveReader(String archive) throws IOException {
+public class GrafoNDBuilder {
+    public static TGrafoND archiveReader(String archive) throws IOException {
         Path caminho = Path.of(archive);
         List<String> linhas = Files.readAllLines(caminho);
 
-        TGrafo gm = null;
+        TGrafoND gm = null;
 
         for (String linha : linhas) {
             if(Objects.equals(linha, linhas.getFirst())){
-                gm  = new TGrafo(Integer.parseInt(linha));
+                gm  = new TGrafoND(Integer.parseInt(linha));
             }
             else{
                 if(Objects.equals(linha, linhas.get(1))){

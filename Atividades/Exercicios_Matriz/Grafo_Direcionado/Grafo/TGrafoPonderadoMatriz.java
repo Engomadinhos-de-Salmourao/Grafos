@@ -1,8 +1,8 @@
-package Exercicios_Matriz.Grafo_Direcionado;
+package Exercicios_Matriz.Grafo_Direcionado.Grafo;
 
 import java.util.Objects;
 
-public class TGrafoPonderadoMatriz implements Grafo{
+public class TGrafoPonderadoMatriz implements Grafo {
     private	int n;
     private	int arestas;
     private Float[][] adj;
