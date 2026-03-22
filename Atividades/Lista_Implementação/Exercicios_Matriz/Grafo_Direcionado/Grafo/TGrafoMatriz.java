@@ -1,4 +1,4 @@
-package Exercicios_Matriz.Grafo_Direcionado.Grafo;
+package Lista_Implementação.Exercicios_Matriz.Grafo_Direcionado.Grafo;
 
 import java.util.*;
 
@@ -279,5 +279,13 @@ public class TGrafoMatriz implements Grafo {
                 else {System.out.print("Adj[" + i + "," + w + "]= 0" + " ");}
         }
         System.out.println("\n\nfim da impressão do grafo." );
+    }
+
+    public int getN() {
+        return n;
+    }
+
+    public Integer[][] getAdj() {
+        return adj;
     }
 }

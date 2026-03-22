@@ -1,4 +1,4 @@
-package Exercicios_Matriz.Grafo_Direcionado.Grafo;
+package Lista_Implementação.Exercicios_Matriz.Grafo_Direcionado.Grafo;
 
 public interface Grafo {
     int inDegree(int v);

@@ -1,19 +1,15 @@
-import Exercicios_Matriz.Grafo_Direcionado.Grafo.Grafo;
-import Exercicios_Matriz.Grafo_Direcionado.Grafo.TGrafoMatriz;
-import Exercicios_Matriz.Grafo_Direcionado.Builder.TGrafoMatrizBuilder;
+import Lista_Implementação.Exercicios_ListaAdjacencia.Builder.TGrafoListaBuilder;
+import Lista_Implementação.Exercicios_ListaAdjacencia.Builder.TGrafoListaNDBuilder;
+import Lista_Implementação.Exercicios_ListaAdjacencia.Grafo.TGrafoLista;
+import Lista_Implementação.Exercicios_ListaAdjacencia.Grafo.TGrafoListaND;
 
 import java.io.IOException;
 
 public class Atividade {
     public static void main(String[] args) throws IOException {
-        String arquivo = "Atividades/Exercicios_Matriz/Grafo_Direcionado/text.txt";
-        Grafo g = TGrafoMatrizBuilder.archiveReader(arquivo);
-
-
-        if(g instanceof TGrafoMatriz aux){
-            TGrafoMatriz g2 = aux.grafoReduzido();
-            g2.show();
-        }
+        String arquivo = "Atividades/Lista_Implementação.Exercicios_ListaAdjacencia/Builder/text.txt";
+        TGrafoListaND g = TGrafoListaNDBuilder.archiveReader(arquivo);
+        TGrafoLista g2 = TGrafoListaBuilder.archiveReader(arquivo);
 
 
     }

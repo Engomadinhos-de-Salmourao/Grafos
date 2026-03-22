@@ -1,4 +1,4 @@
-package Exercicios_Matriz.Grafo_Direcionado.Grafo;
+package Lista_Implementação.Exercicios_Matriz.Grafo_Direcionado.Grafo;
 
 import java.util.Objects;
 
