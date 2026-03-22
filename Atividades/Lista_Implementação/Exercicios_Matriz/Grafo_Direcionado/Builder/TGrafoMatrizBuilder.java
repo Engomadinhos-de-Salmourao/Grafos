@@ -1,4 +1,8 @@
-package Exercicios_Matriz.Grafo_Direcionado;
+package Lista_Implementação.Exercicios_Matriz.Grafo_Direcionado.Builder;
+
+import Lista_Implementação.Exercicios_Matriz.Grafo_Direcionado.Grafo.Grafo;
+import Lista_Implementação.Exercicios_Matriz.Grafo_Direcionado.Grafo.TGrafoMatriz;
+import Lista_Implementação.Exercicios_Matriz.Grafo_Direcionado.Grafo.TGrafoPonderadoMatriz;
 
 import java.io.IOException;
 import java.nio.file.Files;

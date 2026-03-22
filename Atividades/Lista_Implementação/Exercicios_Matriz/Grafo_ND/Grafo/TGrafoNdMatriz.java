@@ -1,4 +1,4 @@
-package Exercicios_Matriz.Grafo_ND;
+package Lista_Implementação.Exercicios_Matriz.Grafo_ND.Grafo;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -113,7 +113,7 @@ public class TGrafoNdMatriz {
                     aux[iaux][jaux] = this.adj[i][j];
                     jaux++;
                 }
-                else{
+                else if (this.adj[i][j] != 0){
                     this.removeA(i,j);
                     this.removeA(j,i);
                 }
@@ -150,5 +150,13 @@ public class TGrafoNdMatriz {
                 else System.out.print("Adj[" + i + "," + w + "]= 0" + " ");
         }
         System.out.println("\n\nfim da impressao do grafo." );
+    }
+
+    public int getN() {
+        return n;
+    }
+
+    public Integer[][] getAdj() {
+        return adj;
     }
 }

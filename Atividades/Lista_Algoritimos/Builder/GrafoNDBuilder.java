@@ -1,4 +1,6 @@
-package Lista_Algoritimos;
+package Lista_Algoritimos.Builder;
+
+import Lista_Algoritimos.Grafo.TGrafoND;
 
 import java.io.IOException;
 import java.nio.file.Files;

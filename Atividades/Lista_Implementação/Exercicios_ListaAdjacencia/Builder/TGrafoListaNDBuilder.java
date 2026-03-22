@@ -1,7 +1,6 @@
-package Exercicios_Matriz.Grafo_ND;
+package Lista_Implementação.Exercicios_ListaAdjacencia.Builder;
 
-import Exercicios_Matriz.Grafo_Direcionado.GraphType;
-import Lista_Algoritimos.TGrafoND;
+import Lista_Implementação.Exercicios_ListaAdjacencia.Grafo.TGrafoListaND;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,16 +8,16 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
-public class TGrafoNdMatrizBuilder {
-    public static TGrafoNdMatriz archiveReader(String archive) throws IOException {
+public class TGrafoListaNDBuilder {
+    public static TGrafoListaND archiveReader(String archive) throws IOException {
         Path caminho = Path.of(archive);
         List<String> linhas = Files.readAllLines(caminho);
 
-        TGrafoNdMatriz gm = null;
+        TGrafoListaND gm = null;
 
         for (String linha : linhas) {
             if(Objects.equals(linha, linhas.getFirst())){
-                gm  = new TGrafoNdMatriz(Integer.parseInt(linha));
+                gm  = new TGrafoListaND(Integer.parseInt(linha));
             }
             else{
                 if(Objects.equals(linha, linhas.get(1))){
@@ -28,9 +27,8 @@ public class TGrafoNdMatrizBuilder {
                 int v = Integer.parseInt(result[0]);
                 int w = Integer.parseInt(result[1]);
                 if (gm != null) {
-                    gm.insertA(v,w);
+                    gm.insereA(v,w);
                 }
-
             }
         }
         return gm;

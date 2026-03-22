@@ -1,0 +1,9 @@
+# IntelliJ
+.idea/
+Atividades/.idea/
+
+# Arquivos de módulo do IntelliJ
+Atividades/Atividades.iml
+
+# Build local (Java)
+out/
