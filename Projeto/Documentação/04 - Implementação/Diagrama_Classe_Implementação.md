@@ -1,259 +1,270 @@
+```plantuml
 @startuml
 left to right direction
 skinparam classAttributeIconSize 0
 skinparam packageStyle rectangle
-skinparam shadowing false
+skinparam linetype ortho
 
-package "Camada de Apresentação" {
+package "Adapters Inbound" {
 
-  package "View" {
-    class RoteiroView {
-      + exibirRoteiro(roteiro: Roteiro)
-      + exibirDetalhesDestino(destino: Destino)
-      + exibirDetalhesLugar(lugar: Lugar)
-      + exibirMensagem(mensagem: String)
-    }
+  class UsuarioController <<controller>> {
+    +consultarPerfil(usuarioId)
+    +atualizarPreferencias(usuarioId, preferenciasDTO)
+    +registrarLocalVisitado(usuarioId, lugarId)
+    +listarLocaisVisitados(usuarioId)
   }
 
-  package "Controllers" {
-    class RoteiroController {
-      + gerarRoteiro(destinoId: Long, orcamento: double, periodoDias: int, usuarioId: Long): Roteiro
-      + ajustarRoteiro(roteiroId: Long): Roteiro
-      + salvarRoteiro(roteiroId: Long): void
-      + excluirRoteiro(roteiroId: Long): void
-      + listarRoteiros(usuarioId: Long): List<Roteiro>
-    }
-
-    class UsuarioController {
-      + visualizarPerfil(usuarioId: Long): Usuario
-      + listarRoteiros(usuarioId: Long): List<Roteiro>
-      + registrarLugarVisitado(usuarioId: Long, lugarId: Long): void
-    }
-
-    class PerfilController {
-      + atualizarPreferencias(usuarioId: Long, preferencias: PreferenciaUsuario): void
-      + visualizarPreferencias(usuarioId: Long): PreferenciaUsuario
-    }
-  }
-}
-
-package "Camada de Aplicação" {
-
-  package "Application Services" {
-    class GerarRoteiroService {
-      + gerarRoteiro(destinoId: Long, orcamento: double, periodoDias: int, usuarioId: Long): Roteiro
-      + montarRoteiro(usuario: Usuario, destino: Destino, lugares: List<Lugar>): Roteiro
-    }
-
-    class GerenciarRoteiroService {
-      + salvarRoteiro(roteiro: Roteiro): void
-      + excluirRoteiro(roteiroId: Long): void
-      + buscarRoteirosPorUsuario(usuarioId: Long): List<Roteiro>
-      + ajustarRoteiro(roteiro: Roteiro): Roteiro
-    }
-
-    class GerenciarUsuarioService {
-      + buscarUsuarioPorId(usuarioId: Long): Usuario
-      + registrarLugarVisitado(usuarioId: Long, lugar: Lugar): void
-    }
-
-    class GerenciarPreferenciaService {
-      + atualizarPreferencias(usuarioId: Long, preferencias: PreferenciaUsuario): void
-      + buscarPreferenciasPorUsuario(usuarioId: Long): PreferenciaUsuario
-    }
+  class RoteiroController <<controller>> {
+    +gerarRoteiro(dadosGeracaoDTO)
+    +visualizarRoteiro(roteiroId)
+    +ajustarRoteiro(roteiroId, ajusteDTO)
+    +salvarRoteiro(roteiroId)
+    +listarRoteiros(usuarioId)
+    +excluirRoteiro(roteiroId)
   }
 
-  package "Ports" {
-    interface RoteiroRepositoryPort {
-      + salvar(roteiro: Roteiro): void
-      + excluir(roteiroId: Long): void
-      + buscarPorId(roteiroId: Long): Roteiro
-      + buscarPorUsuario(usuarioId: Long): List<Roteiro>
-    }
+  class GrafoController <<controller>> {
+    +cadastrarDestino(destinoDTO)
+    +atualizarDestino(destinoId, destinoDTO)
+    +removerDestino(destinoId)
+    +adicionarLugar(destinoId, lugarDTO)
+    +atualizarLugar(lugarId, lugarDTO)
+    +removerLugar(destinoId, lugarId)
+    +adicionarConexao(origemId, destinoId, conexaoDTO)
+    +removerConexao(origemId, destinoId)
+    +carregarGrafo(destinoId)
+  }
 
-    interface UsuarioRepositoryPort {
-      + buscarPorId(usuarioId: Long): Usuario
-      + salvar(usuario: Usuario): void
-    }
-
-    interface DestinoRepositoryPort {
-      + buscarPorId(destinoId: Long): Destino
-      + listarTodos(): List<Destino>
-      + salvar(destino: Destino): void
-    }
-
-    interface LugarRepositoryPort {
-      + buscarPorId(lugarId: Long): Lugar
-      + buscarPorDestino(destinoId: Long): List<Lugar>
-      + salvar(lugar: Lugar): void
-    }
-
-    interface PreferenciaRepositoryPort {
-      + buscarPorUsuario(usuarioId: Long): PreferenciaUsuario
-      + salvar(preferencia: PreferenciaUsuario): void
-    }
-
-    interface RoteirizacaoPort {
-      + gerarRoteiro(usuario: Usuario, destino: Destino, lugares: List<Lugar>, orcamento: double, periodoDias: int): Roteiro
-    }
+  class LocalController <<controller>> {
+    +visualizarDetalhesLocal(lugarId)
+    +listarLocaisPorDestino(destinoId)
+    +buscarLocaisPorCategoria(destinoId, categoria)
   }
 }
 
-package "Camada de Infraestrutura" {
+package "Application Services" {
 
-  package "Adapters" {
-    class RoteiroRepositoryAdapter {
-      + salvar(roteiro: Roteiro): void
-      + excluir(roteiroId: Long): void
-      + buscarPorId(roteiroId: Long): Roteiro
-      + buscarPorUsuario(usuarioId: Long): List<Roteiro>
-    }
+  class UsuarioService <<service>> {
+    +consultarPerfil(usuarioId) : Usuario
+    +atualizarPreferencias(usuarioId, preferencias) : Usuario
+    +registrarLocalVisitado(usuarioId, lugarId) : void
+    +listarLocaisVisitados(usuarioId) : List<Lugar>
+  }
 
-    class UsuarioRepositoryAdapter {
-      + buscarPorId(usuarioId: Long): Usuario
-      + salvar(usuario: Usuario): void
-    }
+  class RoteiroService <<service>> {
+    +gerarRoteiro(usuarioId, destinoId, orcamento, dias) : Roteiro
+    +ajustarRoteiro(roteiroId, ajuste) : Roteiro
+    -selecionarPontosViaveis(grafo, preferencias, orcamento, dias, locaisVisitados) : List<Lugar>
+    -gerarRotaDiaria(hotelBase, pontosSelecionados, grafo) : List<ItemRoteiro>
+    -recalcularRota(roteiro, grafo) : Roteiro
+    -validarHorarioFuncionamento(lugar, horarioAtual) : boolean
+    +salvarRoteiro(roteiroId) : void
+    +listarRoteiros(usuarioId) : List<Roteiro>
+    +buscarRoteiroPorId(roteiroId) : Roteiro
+    +excluirRoteiro(roteiroId) : void
+  }
 
-    class DestinoRepositoryAdapter {
-      + buscarPorId(destinoId: Long): Destino
-      + listarTodos(): List<Destino>
-      + salvar(destino: Destino): void
-    }
+  class GrafoService <<service>> {
+    +cadastrarDestino(destino) : void
+    +atualizarDestino(destinoId, destino) : void
+    +removerDestino(destinoId) : void
+    +adicionarLugar(destinoId, lugar) : void
+    +atualizarLugar(lugarId, lugar) : void
+    +removerLugar(destinoId, lugarId) : void
+    +adicionarConexao(origemId, destinoId, conexao) : void
+    +removerConexao(origemId, destinoId) : void
+    +obterGrafoDestino(destinoId) : Grafo
+    +salvarGrafo(destinoId) : void
+  }
 
-    class LugarRepositoryAdapter {
-      + buscarPorId(lugarId: Long): Lugar
-      + buscarPorDestino(destinoId: Long): List<Lugar>
-      + salvar(lugar: Lugar): void
-    }
-
-    class PreferenciaRepositoryAdapter {
-      + buscarPorUsuario(usuarioId: Long): PreferenciaUsuario
-      + salvar(preferencia: PreferenciaUsuario): void
-    }
-
-    class AlgoritmoRoteirizacaoAdapter {
-      + gerarRoteiro(usuario: Usuario, destino: Destino, lugares: List<Lugar>, orcamento: double, periodoDias: int): Roteiro
-      + calcularScoreLugar(lugar: Lugar, preferencias: PreferenciaUsuario): double
-      + selecionarMelhoresLugares(lugares: List<Lugar>, orcamento: double, periodoDias: int): List<Lugar>
-    }
+  class LocalService <<service>> {
+    +buscarDetalhesLocal(lugarId) : Lugar
+    +listarLocaisPorDestino(destinoId) : List<Lugar>
+    +listarLocaisPorCategoria(destinoId, categoria) : List<Lugar>
   }
 }
 
-package "Camada de Domínio" {
+package "Domain" {
 
-  package "Entidades de Domínio" {
-    class Usuario {
-      - id: Long
-      - nome: String
-      - email: String
-      - role: String
-      + atualizarPreferencias(preferencias: PreferenciaUsuario): void
-      + adicionarRoteiro(roteiro: Roteiro): void
-      + removerRoteiro(roteiro: Roteiro): void
-      + registrarLugarVisitado(lugar: Lugar): void
-    }
+  class Usuario <<entity>> {
+    -id : Long
+    -nome : String
+    -email : String
+    -role : Role
+    -preferencia : PreferenciaUsuario
+    -roteiros : List<Roteiro>
+    -locaisVisitados : List<Lugar>
+    +atualizarPreferencias(preferencia)
+    +registrarLugarVisitado(lugar)
+  }
 
-    class PreferenciaUsuario {
-      - gastronomia: double
-      - cultura: double
-      - natureza: double
-      - vidaNoturna: double
-      + atualizarPesos(gastronomia: double, cultura: double, natureza: double, vidaNoturna: double): void
-      + calcularAfinidade(lugar: Lugar): double
-    }
+  class PreferenciaUsuario <<entity>> {
+    -gostaGastronomia : boolean
+    -gostaCultura : boolean
+    -gostaLazer : boolean
+    -gostaNatureza : boolean
+    +atualizar(gastronomia, cultura, lazer, natureza)
+  }
 
-    class Roteiro {
-      - id: Long
-      - nome: String
-      - orcamento: double
-      - periodoDias: int
-      - salvo: boolean
-      + adicionarItem(item: ItemRoteiro): void
-      + removerItem(item: ItemRoteiro): void
-      + calcularCustoTotal(): double
-      + calcularTempoTotal(): double
-      + salvar(): void
-    }
+  class Roteiro <<entity>> {
+    -id : Long
+    -destino : Destino
+    -hotelBase : Hotel
+    -itens : List<ItemRoteiro>
+    -salvo : boolean
+    +adicionarItem(item)
+    +removerItem(item)
+    +calcularCustoTotal() : double
+    +calcularTempoTotal() : double
+    +marcarComoSalvo()
+  }
 
-    class Destino {
-      - id: Long
-      - nome: String
-      - estado: String
-      - descricao: String
-      + adicionarLugar(lugar: Lugar): void
-      + removerLugar(lugar: Lugar): void
-      + listarLugares(): List<Lugar>
-    }
+  class ItemRoteiro <<entity>> {
+    -ordem : int
+    -tempoPermanencia : double
+    -lugar : Lugar
+    +alterarTempoPermanencia(tempo)
+  }
 
-    abstract class Lugar {
-      - id: Long
-      - nome: String
-      - descricao: String
-      - custoMedio: double
-      - tempoMedioPermanencia: double
-      - popularidade: double
-      + calcularScore(preferencias: PreferenciaUsuario): double
-      + obterDetalhes(): String
-    }
+  class Destino <<entity>> {
+    -id : Long
+    -nome : String
+    -descricao : String
+    +atualizarDados(nome, descricao)
+  }
 
-    class Hotel {
-      + obterTipo(): String
-    }
+  class Grafo <<entity>> {
+    -destino : Destino
+    -lugares : List<Lugar>
+    -conexoes : List<Conexao>
+    +adicionarLugar(lugar)
+    +removerLugar(lugarId)
+    +adicionarConexao(conexao)
+    +removerConexao(origemId, destinoId)
+    +buscarLugarPorId(lugarId) : Lugar
+  }
 
-    class Restaurante {
-      + obterTipo(): String
-    }
+  abstract class Lugar <<entity>> {
+    -id : Long
+    -nome : String
+    -categoria : String
+    -custoEstimado : double
+    -tempoMedioPermanencia : double
+    -horarioAbertura : Time
+    -horarioFechamento : Time
+    +atualizarDados(nome, custo, tempo, horarioAbertura, horarioFechamento)
+  }
 
-    class PontoTuristico {
-      + obterTipo(): String
-    }
+  class Hotel <<entity>>
+  class Restaurante <<entity>>
+  class PontoTuristico <<entity>>
 
-    class ItemRoteiro {
-      - ordem: int
-      - tempoPlanejado: double
-      + alterarOrdem(novaOrdem: int): void
-      + alterarTempoPlanejado(novoTempo: double): void
-    }
+  class Conexao <<entity>> {
+    -origem : Lugar
+    -destino : Lugar
+    -distancia : double
+    -tempoDeslocamento : double
+    -custoDeslocamento : double
+    +atualizarDados(distancia, tempo, custo)
+  }
+
+  enum Role {
+    USER
+    ADMIN
   }
 }
 
-RoteiroView --> RoteiroController
-RoteiroView --> UsuarioController
-RoteiroView --> PerfilController
+package "Ports" {
 
-RoteiroController --> GerarRoteiroService
-RoteiroController --> GerenciarRoteiroService
-UsuarioController --> GerenciarUsuarioService
-PerfilController --> GerenciarPreferenciaService
+  interface UsuarioRepositoryPort <<port>> {
+    +salvar(usuario) : void
+    +buscarPorId(usuarioId) : Usuario
+    +atualizar(usuario) : void
+  }
 
-GerarRoteiroService --> RoteirizacaoPort
-GerarRoteiroService --> DestinoRepositoryPort
-GerarRoteiroService --> LugarRepositoryPort
-GerarRoteiroService --> UsuarioRepositoryPort
-GerarRoteiroService --> PreferenciaRepositoryPort
-GerarRoteiroService --> RoteiroRepositoryPort
+  interface RoteiroRepositoryPort <<port>> {
+    +salvar(roteiro) : void
+    +buscarPorId(roteiroId) : Roteiro
+    +listarPorUsuario(usuarioId) : List<Roteiro>
+    +excluir(roteiroId) : void
+  }
 
-GerenciarRoteiroService --> RoteiroRepositoryPort
-GerenciarUsuarioService --> UsuarioRepositoryPort
-GerenciarPreferenciaService --> PreferenciaRepositoryPort
+  interface GrafoRepositoryPort <<port>> {
+    +carregarPorDestino(destinoId) : Grafo
+    +salvar(destinoId, grafo) : void
+    +existeDestino(destinoId) : boolean
+    +removerDestino(destinoId) : void
+  }
+}
 
-RoteiroRepositoryAdapter ..|> RoteiroRepositoryPort
-UsuarioRepositoryAdapter ..|> UsuarioRepositoryPort
-DestinoRepositoryAdapter ..|> DestinoRepositoryPort
-LugarRepositoryAdapter ..|> LugarRepositoryPort
-PreferenciaRepositoryAdapter ..|> PreferenciaRepositoryPort
-AlgoritmoRoteirizacaoAdapter ..|> RoteirizacaoPort
+package "Adapters Outbound" {
 
-Ports --> "Entidades de Domínio"
+  class UsuarioRepository <<repository>> {
+    +salvar(usuario) : void
+    +buscarPorId(usuarioId) : Usuario
+    +atualizar(usuario) : void
+  }
 
-Roteiro --> ItemRoteiro
-ItemRoteiro --> Lugar
-Usuario --> PreferenciaUsuario
-Usuario --> Roteiro
-Roteiro --> Destino
+  class RoteiroRepository <<repository>> {
+    +salvar(roteiro) : void
+    +buscarPorId(roteiroId) : Roteiro
+    +listarPorUsuario(usuarioId) : List<Roteiro>
+    +excluir(roteiroId) : void
+  }
+
+  class ArquivoGrafoRepository <<repository>> {
+    +carregarPorDestino(destinoId) : Grafo
+    +salvar(destinoId, grafo) : void
+    +existeDestino(destinoId) : boolean
+    +removerDestino(destinoId) : void
+    +parseArquivo(caminho) : Grafo
+    +serializarGrafo(grafo) : String
+  }
+}
+
+' Controllers -> Services
+UsuarioController --> UsuarioService
+RoteiroController --> RoteiroService
+GrafoController --> GrafoService
+LocalController --> LocalService
+
+' Services -> Ports
+UsuarioService --> UsuarioRepositoryPort
+UsuarioService --> GrafoRepositoryPort
+
+RoteiroService --> UsuarioRepositoryPort
+RoteiroService --> RoteiroRepositoryPort
+RoteiroService --> GrafoRepositoryPort
+
+GrafoService --> GrafoRepositoryPort
+LocalService --> GrafoRepositoryPort
+
+' Adapters -> Ports
+UsuarioRepository ..|> UsuarioRepositoryPort
+RoteiroRepository ..|> RoteiroRepositoryPort
+ArquivoGrafoRepository ..|> GrafoRepositoryPort
+
+' Domain relations
+Usuario "1" -- "1" PreferenciaUsuario : define
+Usuario "1" -- "0..*" Roteiro : cria
+Usuario "1" -- "0..*" Lugar : visitou
+Usuario --> Role : possui
+
+Roteiro "1" -- "1" Destino : tem
+Roteiro "1" -- "1" Hotel : hotelBase
+Roteiro "1" -- "1..*" ItemRoteiro : composto por
+ItemRoteiro "1" -- "1" Lugar : inclui
+
+Grafo "1" -- "1" Destino : representa
+Grafo "1" -- "0..*" Lugar : contem
+Grafo "1" -- "0..*" Conexao : contem
+
+Conexao "1" --> "1" Lugar : origem
+Conexao "1" --> "1" Lugar : destino
 
 Lugar <|-- Hotel
 Lugar <|-- Restaurante
 Lugar <|-- PontoTuristico
 
 @enduml
+```
