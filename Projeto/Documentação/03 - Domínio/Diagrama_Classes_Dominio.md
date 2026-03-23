@@ -1,5 +1,5 @@
 @startuml
-top to bottom direction
+left to right direction
 skinparam classAttributeIconSize 0
 
 class Usuario
@@ -11,6 +11,7 @@ class Hotel
 class Restaurante
 class PontoTuristico
 class ItemRoteiro
+class Conexao
 
 enum Role
 
@@ -18,10 +19,12 @@ Usuario "1" -- "1" PreferenciaUsuario : define
 Usuario "1" -- "0..*" Roteiro : cria
 Usuario --> Role : possui
 
-Roteiro "1" -- "1" Destino : é planejado para
+Roteiro "1" -- "1" Destino : tem
 Roteiro "1" -- "1..*" ItemRoteiro : é composto por
+Usuario "1" -- "1..*" Destino: gerencia
 
 Destino "1" -- "0..*" Lugar : possui
+Lugar "1" -- "0..*" Conexao: possui
 
 ItemRoteiro "1" -- "1" Lugar : inclui
 
