@@ -1,5 +1,10 @@
+# UC03 - Vizualizar Detalhes do Local
+---
+![](https://www.plantuml.com/plantuml/png/ZL7DRXen4BxxAKRYaaZD8OqI4GvLDYnR8UqXQje7CFR0MXWF6TkWRTLthp5PjB29LEzjlf_lczad7oI7kB52na0kRXR8GlYrSLl9SWE-aPhsngrWAQt77i8KdLR43Xbkl_Ob-1RHAOG_0g1WfltFngYrG-_XDergiyJQE7mcriXJiiGmUiolZqgrNkMCTqRrUFWIuqLoCCfifGjd5W_vdHCgSk4rj1PXGLQVOvS9-yO457zxczZK8xHR1EBGa11IXSJxvQDaGp0g7sP5DHQBWuNa5cfIqavJ8fEro8bmNztFxeGwZexuA_BEA4pxJAkxQNK22twBPaVVMIxf1sx9cvJL9bfHFfTZWIwOq4A6OJGRbyMiwePrN4a-3KNNx-RReD44TYQXrloMN6AGja6VELVsu37NNq2Z3yRHN5-BItLdsAqmWKNqwd-SH5-NV3xRTWB9ZZ4Pl12NH_rLp-SJsSsmMQOCS_FuLBoEnwIvxbfVYypuo36JBnq_lB5-lqT96HlUCQcwdpHaFw7JSMF_0G00)
+
+---
+```plantuml
 @startuml
-title UC03 - Visualizar detalhes de local
 autonumber
 
 skinparam shadowing false
@@ -33,3 +38,4 @@ Grafo --> LocalService : Lugar
 LocalService --> LocalController : detalhesDoLocal
 LocalController --> Usuario : detalhesDoLocal
 @enduml
+```
