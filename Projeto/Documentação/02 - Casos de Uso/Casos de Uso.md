@@ -1,3 +1,10 @@
+# Casos de Uso
+---
+![](https://www.plantuml.com/plantuml/png/TPAzRXin3CTtFGNXfPE1Ej_POWH5nmO9cfquqJOJdMIGEgSVwCCK7GfqxnFunQfJB3Ui6q_y7tya_wHrfHab3trmWHOPSWBXvIg3Pw4kSufE7pckKR27DNQFkAIx_3aGZ6cCoq0l05sXJqySbx30e2ypsEKapuNuH9fwSgv-Wyb77RRVXTC4KA48B77BpNtFaJLBwIiLg5-Ssq-7oKt0Z8iaFO8d-92vvo-u_RdzaKPzcpAn91tZUoxk-mbyTGxQChK-qWFs57Eo59JVeDIX5kmz2Gf8RLUvpOuRNL_FB3n_63J_nNVGaONkMGSCnQo0funXHTLbI1s6NSLngVXct1OR53kkTis2rh1jB-q8Yc6JTDVynF9t9NTW-TGoxpvrOU1_eRC3bpSa2mxW4xH_zy3UTOewXF58wmhlUfrRQfxR3ckX1SdsrxXys-32mhUqh6z5wWrPOSFA6Nrg_EM1qVq3go_cq6Kxjq377ZsrJhEtht1jj2VWc4b8bLhDh8ul1jx0T3g5kMhgU1pyctH_g37bYi3dUAopyiZAOojFh3oryipASoilhBpylz5wikgoHVKUHitS5KK_zE4F)
+
+---
+
+```plantuml
 @startuml
 left to right direction
 skinparam packageStyle rectangle
@@ -48,12 +55,7 @@ Usuario -- UC9
 Admin -- UC10
 Admin -- UC11
 
-' --- Relacionamentos ---
-UC1 ..> UC8 : <<include>>   ' usa preferências
-UC1 ..> UC9 : <<include>>   ' usa histórico
 
-UC2 ..> UC1 : <<extend>>    ' ajustar após gerar
-UC5 ..> UC4 : <<extend>>    ' salvar a partir da visualização
-UC6 ..> UC4 : <<extend>>    ' excluir a partir da lista
 
 @enduml
+```
