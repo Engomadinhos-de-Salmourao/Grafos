@@ -1,6 +1,9 @@
+# UC08 - Atualizar Prefêrencias
+---
+![](https://www.plantuml.com/plantuml/png/bPB1Rjim38RlUWgXkIp0UkYA5caEGzCu1WeKMB5s3y38T4D45ZrAMk0DUveT1kmryc9pqsYncmHOvHlvyV_voxhs0IJ4oYg8WLsivYXA-IMv6WGgxHTGy8hSaox1UknqXACh38j3qMSVkYFuDQ8pg7yehISYl7fSa5awz5wVjQKxAl6E7Dwm52XJjYnwSBKvtIwOvTF6OqlaLyzVIzo3139KWmizYSlDwGCvk_0G6ejwphRezruxh1OKKFti9B7aC3GrQfQmOAN0X9RxuYC8iHvabxD9FbBpPmcG9ZMchQUmjIWjSf5VpCwLUIabuW7b6nbiCqtpysd-klqPQ_OKM9gMc6GtsKYX2nGQVR8bJZJuH6TS0Jazc8sooInNAgrt-l70GcCD8OAbxo3tWYKAEaFWtyKNyhPuh-jEFNlyD5JxAabwb-IDkaEb-W99ifz-hEVHcrQIvRROQGtLFdfwOATKE6wMBk_O-lsT-pC77GsxagI2zU_rB_xFa3ll5F5mmBVR7Na2DKf9Th9rBLZjGTrHFTx-klMVpJtycmElhj4LiR9_0G00)
+---
 ```plantuml
 @startuml
-title UC08 - Atualizar preferências
 autonumber
 
 skinparam shadowing false
