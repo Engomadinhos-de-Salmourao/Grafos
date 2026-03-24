@@ -1,4 +1,7 @@
-package Lista_Dijkstra;
+package Lista_Dijkstra.Builder;
+
+import Lista_Dijkstra.Grafo.GrafoNDPonderado;
+import Lista_Dijkstra.Grafo.GrafoPonderado;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -6,20 +9,20 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
-public class Builder {
-    public static GrafoNDPonderado archiveReader(String archive) throws IOException {
+public class Builder_Direcionado {
+    public static GrafoPonderado archiveReader(String archive) throws IOException {
         Path caminho = Path.of(archive);
         List<String> linhas = Files.readAllLines(caminho);
 
-        GrafoNDPonderado gm = null;
+        GrafoPonderado gm = null;
 
         for (String linha : linhas) {
             if(Objects.equals(linha, linhas.getFirst())){
-                gm  = new GrafoNDPonderado(Integer.parseInt(linha));
+                gm  = new GrafoPonderado(Integer.parseInt(linha));
             }
             else{
                 if(Objects.equals(linha, linhas.get(1))){
-                   continue;
+                    continue;
                 }
                 String[] result = linha.split(" ");
                 int v = Integer.parseInt(result[0]);

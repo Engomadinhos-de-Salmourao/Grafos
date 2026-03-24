@@ -1,14 +1,11 @@
-package Lista_Dijkstra;
+package Lista_Dijkstra.Grafo;
 
-import java.util.Objects;
-
-public class GrafoNDPonderado {
-
+public class GrafoPonderado implements Grafo{
     private	int n;
     private	int arestas;
     private Float[][] adj;
 
-    public GrafoNDPonderado(int n){
+    public GrafoPonderado(int n){
         this.n = n;
         this.arestas = 0;
         this.adj = new Float[n][n];
@@ -22,24 +19,13 @@ public class GrafoNDPonderado {
     public void insertA(int v, int w, float weight) {
         if(adj[v][w].equals(Float.POSITIVE_INFINITY)){
             adj[v][w] = weight;
-            adj[w][v] = weight;
-            arestas+=2;
+            arestas++;
         }
         else{
             System.out.println("Já existe uma aresta entre os nós " + v + " e " + w );
         }
     }
 
-    public void removeA(int v, int w) {
-        if(!adj[v][w].equals(Float.POSITIVE_INFINITY)){
-            adj[v][w] = Float.POSITIVE_INFINITY;
-            adj[w][v] = Float.POSITIVE_INFINITY;
-            arestas-=2;
-        }
-        else{
-            System.out.println("Não existe uma aresta entre os nós " + v + " e " + w);
-        }
-    }
 
     public void show() {
         System.out.println("n: " + n );

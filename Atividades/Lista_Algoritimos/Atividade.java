@@ -9,8 +9,8 @@ import java.io.IOException;
 
 public class Atividade {
     public static void main(String[] args) throws IOException {
-        TGrafo grafo = GrafoBuilder.archiveReader("Atividades/Lista_Algoritimos/Builder/GrafoD.txt");
-        TGrafoND grafoND = GrafoNDBuilder.archiveReader("Atividades/Lista_Algoritimos/Builder/GrafoND.txt");
+        TGrafo grafo = GrafoBuilder.archiveReader("./Builder/GrafoD.txt");
+        TGrafoND grafoND = GrafoNDBuilder.archiveReader("./Builder/GrafoND.txt");
 
         System.out.println("Largura Grafo Direcionado: ");
         grafo.largura(0);

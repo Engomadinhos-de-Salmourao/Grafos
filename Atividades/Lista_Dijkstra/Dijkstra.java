@@ -2,12 +2,15 @@ package Lista_Dijkstra;
 
 
 
+import Lista_Dijkstra.Grafo.Grafo;
+import Lista_Dijkstra.Grafo.GrafoNDPonderado;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Dijkstra {
 
-    public void dijkstra_algoritimo(GrafoNDPonderado grafo, int origem){
+    public void dijkstra_algoritimo(Grafo grafo, int origem){
         if(origem >= grafo.getN()) return;
         origem -= 1;
 
@@ -66,7 +69,7 @@ public class Dijkstra {
         this.print_rot(rot, grafo, origem);
     }
 
-    public List<Integer> rotas_de_v(int v,GrafoNDPonderado grafo) {
+    public List<Integer> rotas_de_v(int v,Grafo grafo) {
         List<Integer> rotas = new ArrayList<>();
         for (int i = 0; i < grafo.getN(); i++) {
             if (grafo.getAdj()[v][i] != Float.POSITIVE_INFINITY) {
@@ -76,7 +79,7 @@ public class Dijkstra {
         return rotas;
     }
 
-    public void print_rot(Integer[] rot,GrafoNDPonderado grafo,int origem){
+    public void print_rot(Integer[] rot,Grafo grafo,int origem){
         for (int i = 0; i < grafo.getN(); i++) {
             if(origem == i) continue;
             int k = i;
