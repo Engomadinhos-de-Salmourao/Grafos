@@ -1,6 +1,10 @@
+# UC10 - Gerenciar Destinos
+---
+![](https://www.plantuml.com/plantuml/png/bPBDJjj04CVl-nGhSMcaSg0857AeC75SLK9gLNY1oUw4ZBBU2RFZf57Lf-cX3yABrOvTY34vi3b4olpc_w79TL8GhSfWe5AELJb7CIQjAAv1eBHf2Pwt51_i0aB2Wubm5RrZYIZsxDFX2ZvM61tQNyRQJ8ItzqjoguWfsJDZxIqjy9OYth1ub2a75djojN-7Kt2hXxr7HnHNzQSXleCeELf3r9x4vVxrWOAZtkake9rpyFtPQuVjaXJDxuCcWIBgResMHPTi33YjkSoN52cfW6ziyyjPLepDl142sTal0WkUSbJX4B01BegBsRbnxK_j_0vbGmxhLjFYV5ey3pDvh6Z3U-O7hZcHikngBCjlyh71gAITXJsPZVDiLXZJ3tJwUH1XOXruQ039CIb5_k3Rx_p-syZqyKQX7_Bu-iYO7bbl7camiVYJak8hWQz-P8vid0vYj7_1WMLBDIc5G6npEjl9j-XRKf4xntSqI10s82_HFxwelAU5uxWWAU7fxzEVWVsRrqkLmvHuSAY6xXz_yh_vjBkOPtEDqLTb-0S0)
+---
 ```plantuml
 @startuml
-title UC10 - Gerenciar cidades/destinos
+
 autonumber
 
 skinparam shadowing false
