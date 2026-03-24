@@ -1,0 +1,35 @@
+@startuml
+title UC03 - Visualizar detalhes de local
+autonumber
+
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam sequence {
+  ArrowThickness 1
+  LifeLineBorderColor #999999
+  LifeLineBackgroundColor #F9F9F9
+  ParticipantBorderColor #666666
+  ParticipantFontStyle bold
+  ParticipantBackgroundColor white
+}
+skinparam linetype ortho
+
+actor Usuario #D6EAF8
+boundary LocalController #D5F5E3
+control LocalService #FCF3CF
+control ArquivoGrafoRepository #FADBD8
+entity Grafo #E8DAEF
+entity Lugar #E8DAEF
+
+Usuario -> LocalController : visualizarDetalhesLocal(lugarId, destinoId)
+LocalController -> LocalService : buscarDetalhesLocal(lugarId, destinoId)
+
+LocalService -> ArquivoGrafoRepository : carregarPorDestino(destinoId)
+ArquivoGrafoRepository --> LocalService : Grafo
+
+LocalService -> Grafo : buscarLugarPorId(lugarId)
+Grafo --> LocalService : Lugar
+
+LocalService --> LocalController : detalhesDoLocal
+LocalController --> Usuario : detalhesDoLocal
+@enduml
