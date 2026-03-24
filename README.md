@@ -7,9 +7,9 @@ Repositório com todas as atividades realizadas na matéria de Teoria dos Grafos
 
 ---
 ## Atividades (códigos):
-1. [Lista de Implementação em Grafos](.Atividades/Lista_Implementação)
+1. [Lista de Implementação em Grafos](./Atividades/Lista_Implementação)
 2. [Grafos em Largura e Profundidade](./Atividades/Lista_Algoritimos)
-3. [Algortimo de Dijkstra](./Atividade/Lista_Dijkstra)
+3. [Algortimo de Dijkstra](./Atividades/Lista_Dijkstra)
 
 ---
 ## Projeto:
