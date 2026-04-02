@@ -2,8 +2,11 @@ package app.ports;
 
 import app.domain.Destino;
 
+import java.io.IOException;
+import java.util.List;
+
 public interface DestinoRepositotyPort{
-    void salvarDestino(int id);
-    void removerdestino(int  id);
-    Destino getDestino(int id);
+    void salvarDestino(String nome) throws IOException;
+    void removerdestino(int  id) throws IOException;
+    List<Destino> getAll();
 }

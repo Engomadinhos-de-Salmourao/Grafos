@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Tno {
-    private Integer lugar;
+    private int lugar;
     private Float dist;
     private Float tempoDeslocamento;
     private Tno proximo;

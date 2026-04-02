@@ -5,6 +5,6 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class Destino {
-    private Long id;
+    private int id;
     private String nome;
 }

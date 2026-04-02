@@ -1,55 +1,80 @@
 package app.service;
 
+import app.domain.Destino;
 import app.domain.GrafoDestino;
+import app.domain.Lugar;
+import app.outside_adapters.DestinoRepository;
+import app.outside_adapters.GrafoRepository;
+import app.ports.DestinoRepositotyPort;
+import app.ports.GrafoRepositoryPort;
+
+import java.io.IOException;
+import java.util.List;
 
 public class GrafoService {
 
+    public GrafoDestino grafo;
+    private final DestinoRepositotyPort destinoRepository = new DestinoRepository();
+    private final GrafoRepositoryPort grafoRepository = new GrafoRepository();
 
-    //Se o TripAdvisor estiver muitoooooo difícil, opção de popular com dados mock para teste e implementar o resto
-    public void cadastrarDestino(String nome){
-        //scrapper responsavel por obter dados necessários
-        //necessário passar no txt antes para saber o index do novo destino
+    public List<Destino> getAllDestinos(){
+        return destinoRepository.getAll();
     }
 
-    public void removerDestino(String nome){
-        //aceitar Grafo como parametro, se não houver grafo obtido será null e não será necessário remover do grafo
-        //necessário passar no txt para remover o destino
-        //pegar o grafo e remover todos os nós que tinham o index do destino deletado e suas arestas
+    public void adicionarLugar(Lugar lugar) throws IOException {
+        grafo.insereV(lugar);
     }
 
-    public void adicionarLugar(GrafoDestino grafo){
-        //Adicionar 1 ao numero de nos do grafo no txt
-        //adicionar uma linha no txt com a descrição do novo lugar, o id dele deve ser a quantidade de nós atual -1
-        //retornar um grafo novo com o lugar nele (passar pela verificação do destino e se eh nulo ou não o grafo)
+    public void removerLugar(int id) throws IOException {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Id do lugar inválido.");
+        }
+
+        grafo.removeV(id);
     }
 
-    public void removerLugar(GrafoDestino grafo){
-        //remove 1 ao numero de nos do grafo no txt
-        //remove uma linha no txt com a descrição do lugar
-        //retornar um grafo novo sem o lugar nele (passar pela verificação do destino e se eh nulo ou não o grafo)
+    public void adicionarAresta(Integer v, Integer w, Float dist, Float tempo) throws IOException {
+        if (v <= 0 || w <= 0) {
+            throw new IllegalArgumentException("Ids dos lugares devem ser maiores que zero.");
+        }
+
+        if (v.equals(w)) {
+            throw new IllegalArgumentException("Uma aresta não pode ligar um lugar a ele mesmo.");
+        }
+
+        if (tempo < 0) {
+            throw new IllegalArgumentException("Tempo não pode ser negativo.");
+        }
+
+        if (dist < 0) {
+            throw new IllegalArgumentException("Distância não pode ser negativa.");
+        }
+
+        grafo.insereA(v-1, w-1, dist, tempo);
     }
 
-    public void adicionarAresta(GrafoDestino destino, Integer v, Integer w){
-        //Adicionar 1 ao numero de arestas do grafo no txt
-        //adicionar uma linha no txt com a descrição da nova aresta
-        //retornar um grafo novo com a aresta nele (passar pela verificação do destino e se eh nulo ou não o grafo)
+    public void removerAresta(Integer v, Integer w) throws IOException {
+        if (v <= 0 || w <= 0 || v.equals(w)) {
+            throw new IllegalArgumentException("Ids inválidos para remoção da aresta.");
+        }
+
+        grafo.removeA(v-1, w-1);
     }
 
-    public void removerAresta(GrafoDestino destino, Integer v, Integer w){
-        //remover 1 ao numero de arestas do grafo no txt
-        //remover uma linha no txt com a descrição da nova aresta
-        //retornar um grafo novo sem a aresta nele (passar pela verificação do destino e se eh nulo ou não o grafo)
+    public GrafoDestino obterGrafo() throws IOException {
+        this.grafo = grafoRepository.carregar();
+        return grafo;
     }
 
-    public GrafoDestino obterGrafo(){
-        return new GrafoDestino(0);
+    public void showGrafo(){grafo.show();}
+
+    public String conexidade(){return (grafo.conexidade() == 1)?"Conexo":"Não Conexo";}
+
+    public void gravar() throws IOException {
+        grafoRepository.gravar(grafo);
     }
 
-    public void showGrafo(GrafoDestino grafo){grafo.show();}
-
-    public String conexidade(GrafoDestino destino){return (obterGrafo().conexidade() == 1)?"Conexo":"Não Conexo";}
-
-    public void grafoReduzido(GrafoDestino grafo){
-
+    public void mostrarConteudo() throws IOException {
+        grafoRepository.mostrarConteudo();
     }
 }

@@ -3,32 +3,24 @@ package app.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 @Getter
+
 public class  GrafoDestino {
     private int n;
     private int m;
     private Tno[] adj;
-    private Destino destino;
-    private List<Integer> lugares;
+    @Setter
+    private Map<Integer, Lugar> lugares;
+
 
 
     public GrafoDestino(int n) {
         this.n = n;
         this.m = 0;
         this.adj = new Tno[n];
-    }
-
-    public GrafoDestino(Destino destino, int n){
-        this.destino = destino;
-        this.lugares = new ArrayList<>();
-        this.n = n;
-        this.m = 0;
-        this.adj = new Tno[n];
+        this.lugares = new HashMap<>();
     }
 
     public int conexidade(){
@@ -46,19 +38,11 @@ public class  GrafoDestino {
             int n = fila.remove();
             Tno aux = this.adj[n];
             while(aux != null){
-                if(destino != null){
-                    if (!visitados.contains(this.getPosition(aux.getLugar()))) {
-                        fila.add(this.getPosition(aux.getLugar()));
-                        visitados.add(this.getPosition(aux.getLugar()));
-                    }
-                }
-                else{
-                    if (!visitados.contains(aux.getLugar())) {
-                        fila.add(aux.getLugar());
-                        visitados.add(aux.getLugar());
-                    }
-                }
 
+                if (!visitados.contains(aux.getLugar())) {
+                    fila.add(aux.getLugar());
+                    visitados.add(aux.getLugar());
+                }
                 aux = aux.getProximo();
             }
         }
@@ -66,24 +50,12 @@ public class  GrafoDestino {
     }
 
     public void insereA(Integer v, Integer w, Float dist, Float tempo) {
-        int pos;
-        int pos2;
-        if(this.destino != null){
-            pos  = getPosition(v);
-            pos2 = getPosition(w);
-        }
-        else{
-            pos = v;
-            pos2 = w;
-        }
-
-
         Tno novoNo;
-        Tno no = adj[pos];
+        Tno no = adj[v];
         Tno ant = null;
 
         Tno novoNo2;
-        Tno no2 = this.adj[pos2];
+        Tno no2 = this.adj[w];
         Tno ant2 = null;
 
         while(no != null && w >= no.getLugar()){
@@ -101,7 +73,7 @@ public class  GrafoDestino {
         }
 
         novoNo = new Tno();
-        novoNo.setLugar(w); 
+        novoNo.setLugar(w);
         novoNo.setProximo(no);
         novoNo.setDist(dist);
         novoNo.setTempoDeslocamento(tempo);
@@ -113,13 +85,13 @@ public class  GrafoDestino {
         novoNo2.setTempoDeslocamento(tempo);
 
         if( ant == null){
-            adj[pos] = novoNo;
+            adj[v] = novoNo;
         } else{
             ant.setProximo(novoNo);
         }
 
         if( ant2 == null){
-            adj[pos2] = novoNo2;
+            adj[w] = novoNo2;
         } else{
             ant2.setProximo(novoNo2);
         }
@@ -128,21 +100,10 @@ public class  GrafoDestino {
     }
 
     public void removeA(int v, int w) {
-        int pos;
-        int pos2;
-        if(this.destino != null){
-            pos  = getPosition(v);
-            pos2 = getPosition(w);
-        }
-        else{
-            pos = v;
-            pos2 = w;
-        }
-
-        Tno no = adj[pos];
+        Tno no = adj[v];
         Tno ant = null;
 
-        Tno no2 = adj[pos2];
+        Tno no2 = adj[w];
         Tno ant2 = null;
 
         while (no != null && no.getLugar() != w) {
@@ -157,13 +118,13 @@ public class  GrafoDestino {
 
         if (no != null && no2 != null) {
             if (ant == null) {
-                adj[pos] = no.getProximo();
+                adj[v] = no.getProximo();
             } else {
                 ant.setProximo(no.getProximo());
             }
 
             if (ant2 == null) {
-                adj[pos2] = no2.getProximo();
+                adj[w] = no2.getProximo();
             } else {
                 ant2.setProximo(no2.getProximo());
             }
@@ -178,7 +139,7 @@ public class  GrafoDestino {
         }
     }
 
-    public void insereV(int v){
+    public void insereV(Lugar lugar){
         Tno[] aux = new Tno[n+1];
         for (int i = 0; i < n; i++) {
             aux[i] = adj[i];
@@ -186,46 +147,58 @@ public class  GrafoDestino {
 
         n++;
         adj = aux;
-        if(destino != null) lugares.add(v);
+        lugares.put(this.n, lugar);
     }
 
     public void removeV(int v) {
-        int pos;
-        if(this.destino != null){
-            pos  = getPosition(v);
-        } else{pos = v;}
-
+        int pos = v-1;
         while (adj[pos] != null) {
-            removeA(v, adj[v].getLugar());
+            removeA(pos, adj[pos].getLugar());
         }
 
         Tno[] novoAdj = new Tno[n - 1];
+        Map<Integer, Lugar> novosLugares = new HashMap<>();
 
-        int j = 0;
+        int novoIndice = 0;
         for (int i = 0; i < n; i++) {
             if (i == pos) {
                 continue;
             }
-            novoAdj[j] = adj[i];
-            j++;
+
+            novoAdj[novoIndice] = adj[i];
+
+            Lugar lugar = lugares.get(i+1);
+            lugar.setId(novoIndice+1);
+            novosLugares.put(novoIndice+1, lugar);
+
+            novoIndice++;
         }
 
+        for (int i = 0; i < novoAdj.length; i++) {
+            Tno aux = novoAdj[i];
 
-        if(destino != null) lugares.remove(v);
+            while (aux != null) {
+                if (aux.getLugar() > v) {
+                    aux.setLugar(aux.getLugar() - 1);
+                }
+                aux = aux.getProximo();
+            }
+        }
+
         adj = novoAdj;
+        lugares = novosLugares;
         n--;
     }
 
-    private int getPosition(Integer v){return this.lugares.indexOf(v);}
 
     public void show() {
         System.out.print("n: " + n);
         System.out.print("\nm: " + m + "\n");
         for( int i=0; i < n; i++){
-            System.out.print("\n" + i + ": ");
+            System.out.print("\n" + (i+1) + ": ");
             Tno no = adj[i];
             while( no != null ){
-                System.out.print("(id: " +no.getLugar() + "; distância: " + no.getDist() + "; tempo: " + no.getTempoDeslocamento() + ") ");
+                System.out.print("(id: " +(no.getLugar()+1) + "; distância: " + no.getDist() + "; tempo: " + no.getTempoDeslocamento() + ") ");
                 no = no.getProximo();
             }
         }
