@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class GrafoRepository implements GrafoRepositoryPort {
 
-    private final String caminhoArquivo = "./src/main/java/app/files/grafo.txt";
+    private final String caminhoArquivo = "./files/grafo.txt";
 
     @Override
     public GrafoDestino carregar() throws IOException {

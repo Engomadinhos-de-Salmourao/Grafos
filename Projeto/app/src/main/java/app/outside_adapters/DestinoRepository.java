@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class DestinoRepository implements DestinoRepositotyPort {
-    private final String path = "./src/main/java/app/files/destinos.txt";
+    private final String path = "./files/destinos.txt";
 
     @Override
     public void salvarDestino(String nome) throws IOException {
